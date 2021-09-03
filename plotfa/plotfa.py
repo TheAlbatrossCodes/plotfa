@@ -28,12 +28,17 @@ def farsi(text):
 
 
 def set_font(font_name='B Yekan'):
-    """Set the font for the plot
+    """
+    Set the font for the plot
 
-    It's important to note that if you wish for the numbers on the plot
-    to be shown in persian, you have to use the older B fonts. Using
-    corrected fonts (Yekan+, etc) will make the numbers in your plots to
-    show up as English.
+    It's important to note that if you wish to have persian numbers on
+    the plot, you have to use the older B fonts. Using any of the modern
+    or corrected fonts (Yekan+, etc) will result in English numbers on
+    the plot.
+
+    You may encounter a lot of Glyph warnings thrown by matplotlib, but
+    that's normal, because some of these older fonts which we rely on,
+    have not defined some of the standard glyphs.
 
     Args:
         font_name (str, optional): [description]. Defaults to 'B Yekan'.
@@ -49,8 +54,11 @@ def prettify(title_size=25,
              label_pad=15,
              grid_thickness=1.3,
              grid_visibility=1.0):
-    """Define a couple of settings (default, can be modified) that prettify
-    the plot
+    """
+    Defines several modifiable settings to prettify the plots
+
+    The settings set by this function are amongst the settings that
+    users are most likely to want to change.
 
     Args:
         title_size (float, optional): Size of the plot's title. Defaults to 25.
@@ -89,3 +97,27 @@ def prettify(title_size=25,
     mpl.rcParams['axes.labelpad'] = label_pad
     mpl.rcParams['grid.linewidth'] = grid_thickness
     mpl.rcParams['grid.alpha'] = grid_visibility
+
+
+def modify_plot(plot, title='', xlabel='', ylabel=''):
+  """
+  Set the plot's title and the label shown on X and Y axis.
+
+  Keep in mind that if you want set Persian title and label on your plot,
+  you should wrap the arguments you give to title, xlabel and ylabel with
+  the farsi() function.
+
+  If no argument is given to the title, xlabel or ylabel parameter, the
+  plot will have no title or label.
+
+  Args:
+      plot (ax): The plot you wish to add title, xlabel and ylabel to.
+      title (str, optional): The title shown on the plot. Defaults to ''.
+      xlabel (str, optional): The label shown on the plot's X axis.
+        Defaults to ''.
+      ylabel (str, optional): The label showon the plot's Y axis.
+        Defaults to ''.
+  """
+  plot.set_title(title)
+  plot.set_xlabel(xlabel)
+  plot.set_ylabel(ylabel)
