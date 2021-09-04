@@ -8,14 +8,21 @@ from bidi.algorithm import get_display
 from arabic_reshaper import ArabicReshaper
 
 
-def farsi(text):
-    """Make persian text ready for plots
+def farsi(text, *args):
+    """
+    Make persian text ready for plots
+
+    Can alternatively receive a list of strings as input, in such a case
+    it will return a list of converted persian texts.
 
     Args:
         text (str): Persian text to be modified
 
     Returns:
-        str: Modified persian text, ready to be used in plots
+        str or list: If only one argument is passed to the function, it
+          will return the modified persian text as a string.
+          If several arguments are passed to the function, it will
+          return a list of modified persian text.
     """
     configuration = {
         'delete_harekat': False,
@@ -24,7 +31,12 @@ def farsi(text):
     }
     reshaper = ArabicReshaper(configuration)
 
-    return get_display(reshaper.reshape(text))
+    convert = lambda txt: get_display(reshaper.reshape(txt))
+
+    if (args == ()):
+        return convert(text)
+
+    return [convert(text), *[convert(txt) for txt in args]]
 
 
 def set_font(font_name='B Yekan'):
@@ -100,24 +112,24 @@ def prettify(title_size=25,
 
 
 def modify_plot(plot, title='', xlabel='', ylabel=''):
-  """
-  Set the plot's title and the label shown on X and Y axis.
+    """
+    Set the plot's title and the label shown on X and Y axis.
 
-  Keep in mind that if you want set Persian title and label on your plot,
-  you should wrap the arguments you give to title, xlabel and ylabel with
-  the farsi() function.
+    Keep in mind that if you want set Persian title and label on your plot,
+    you should wrap the arguments you give to title, xlabel and ylabel with
+    the farsi() function.
 
-  If no argument is given to the title, xlabel or ylabel parameter, the
-  plot will have no title or label.
+    If no argument is given to the title, xlabel or ylabel parameter, the
+    plot will have no title or label.
 
-  Args:
-      plot (ax): The plot you wish to add title, xlabel and ylabel to.
-      title (str, optional): The title shown on the plot. Defaults to ''.
-      xlabel (str, optional): The label shown on the plot's X axis.
-        Defaults to ''.
-      ylabel (str, optional): The label showon the plot's Y axis.
-        Defaults to ''.
-  """
-  plot.set_title(title)
-  plot.set_xlabel(xlabel)
-  plot.set_ylabel(ylabel)
+    Args:
+        plot (ax): The plot you wish to add title, xlabel and ylabel to.
+        title (str, optional): The title shown on the plot. Defaults to ''.
+        xlabel (str, optional): The label shown on the plot's X axis.
+          Defaults to ''.
+        ylabel (str, optional): The label showon the plot's Y axis.
+          Defaults to ''.
+    """
+    plot.set_title(title)
+    plot.set_xlabel(xlabel)
+    plot.set_ylabel(ylabel)
