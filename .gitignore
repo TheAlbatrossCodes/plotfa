@@ -1,3 +1,6 @@
+### Jupyter Stuff ###
+*.ipynb
+
 ### Visual Studio Code ###
 .vscode/
 .vscode/*
