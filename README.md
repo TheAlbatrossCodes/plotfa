@@ -14,10 +14,10 @@ import plotfa
 ```
 
 It's important to note that any bit of persian text
-that we want shown on the plot, *must* pass through the `plotfa.farsi()` function. For simplicity, we import this function explicitly on the top:
+that we want shown on the plot, *must* pass through the `plotfa.fa()` function. For simplicity, we explicitly import this function on the top:
 
 ```python
-from plotfa import farsi as fa
+from plotfa import fa
 ```
 
 Now, let's say we want to create a little bar plot using seaborn, so:

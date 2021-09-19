@@ -8,15 +8,17 @@ from bidi.algorithm import get_display
 from arabic_reshaper import ArabicReshaper
 
 
-def farsi(text, *args):
+def fa(text=None, from_list=None):
     """
     Make persian text ready for plots
 
-    Can alternatively receive a list of strings as input, in such a case
-    it will return a list of converted persian texts.
+    Can work on either a string, or a list of strings. If a list is
+    passed, it will return a list, otherwise, it will return a string.
 
     Args:
-        text (str): Persian text to be modified
+        text (str, optional): Persian text to be modified. 
+        from_list (list, optional): A list of persian text to be
+          modified.
 
     Returns:
         str or list: If only one argument is passed to the function, it
@@ -29,14 +31,15 @@ def farsi(text, *args):
         'support_ligatures': True,
         'language': 'Farsi'
     }
-    reshaper = ArabicReshaper(configuration)
 
+    reshaper = ArabicReshaper(configuration)
     convert = lambda txt: get_display(reshaper.reshape(txt))
 
-    if (args == ()):
+    if text is not None:
         return convert(text)
 
-    return [convert(text), *[convert(txt) for txt in args]]
+    if from_list is not None:
+        return [convert(txt) for txt in from_list]
 
 
 def set_font(font_name='B Yekan'):
